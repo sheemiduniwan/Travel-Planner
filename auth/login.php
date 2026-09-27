@@ -2,7 +2,7 @@
 session_start();
 require_once '../db_config.php';
 
-// User දැනටමත් Log වී සිටී නම් index.html වෙත Redirect කිරීම
+
 if (isset($_SESSION['user_id'])) {
     header("Location: ../index.html");
     exit();
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($email) || empty($password)) {
         $error = "Please fill in all fields.";
     } else {
-        // User පරීක්ෂා කිරීම
+      
         $stmt = $conn->prepare("SELECT id, username, password FROM users WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -31,13 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($result->num_rows === 1) {
             $user = $result->fetch_assoc();
             
-            // Password එක Verify කිරීම (Encrypted Password පරීක්ෂාව)
+           
             if (password_verify($password, $user['password'])) {
-                // Session එක ආරම්භ කිරීම
+              
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
 
-                // Success alert එකක් පෙන්වා index.html වෙත Redirect කිරීම
                 echo "<script>
                     alert('Login successful! Welcome back, " . htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8') . "');
                     window.location.href = '../index.html';
