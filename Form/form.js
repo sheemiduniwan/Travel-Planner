@@ -1,4 +1,4 @@
-// script.js ෆයිල් එක ඇතුළට මේ ටික විතරක් දාන්න (<script> tags ඕන නැත)
+
 
 function openModal(event) {
     event.preventDefault();
@@ -22,11 +22,11 @@ function handleFormSubmit(event) {
     closeModal();
 }
 
-// Page එක Load වෙනකොට URL එකේ openModal=true තියෙනවාද බලලා Form එක open කිරීම
+
 window.addEventListener('DOMContentLoaded', (event) => {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('openModal') === 'true') {
-        // Modal එක open කිරීමට function එක call කිරීම
+       
         const modal = document.getElementById('plannerModal');
         if (modal) {
             modal.style.display = 'flex';
@@ -34,11 +34,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 });
 
-// Feature 1: Form Validation & Submission Handling
+
 function handleFormSubmit(event) {
     event.preventDefault();
 
-    // Form එකේ inputs ලබා ගැනීම (plannerModal ඇතුළෙන් ආරක්ෂිතව තෝරා ගැනීම)
+    
     const modal = document.getElementById('plannerModal');
     const destInput = modal ? modal.querySelector('input[type="text"]') : document.querySelector('input[type="text"]');
     const dateInputs = modal ? modal.querySelectorAll('input[type="date"]') : document.querySelectorAll('input[type="date"]');
@@ -47,7 +47,7 @@ function handleFormSubmit(event) {
     const startDate = dateInputs.length > 0 ? dateInputs[0].value : "";
     const endDate = dateInputs.length > 1 ? dateInputs[1].value : "";
 
-    // Simple Validation Check
+   
     if (destination === "") {
         alert("Please enter a destination!");
         return;
