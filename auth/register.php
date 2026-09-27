@@ -2,7 +2,7 @@
 session_start();
 require_once '../db_config.php';
 
-// User දැනටමත් Log වී සිටී නම් index.html වෙත Redirect කිරීම
+
 if (isset($_SESSION['user_id'])) {
     header("Location: ../index.html");
     exit();
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
 
-    // Validation Check
+  
     if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
         $error = "Please fill in all required fields.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (strlen($password) < 6) {
         $error = "Password must be at least 6 characters long.";
     } else {
-        // Email එක කලින් භාවිත කර ඇත්දැයි පරීක්ෂා කිරීම
+       
         $check_sql = "SELECT id FROM users WHERE email = ?";
         $stmt = $conn->prepare($check_sql);
         $stmt->bind_param("s", $email);
@@ -37,16 +37,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($result->num_rows > 0) {
             $error = "An account with this email already exists.";
         } else {
-            // Password එක Hash කිරීම (Security)
+         
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            // User එකතු කිරීම
             $insert_sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
             $insert_stmt = $conn->prepare($insert_sql);
             $insert_stmt->bind_param("sss", $username, $email, $hashed_password);
 
             if ($insert_stmt->execute()) {
-                // Successful registration -> alert and redirect to login.php
+                
                 echo "<script>
                     alert('Registration successful! Please log in to your account.');
                     window.location.href = 'login.php?registered=1';
