@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("ssss", $name, $email, $phone, $message);
 
         if ($stmt->execute()) {
-            //  Alert  index.html Redirect 
+            
             echo "<script>
                 alert('Thank you! Your message has been sent successfully.');
                 window.location.href = 'index.html#contact';
