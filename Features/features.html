@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features & Destinations - Infinite Travels Sri Lanka</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Matched Style CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="features-page">
+
+    <!-- TRIP PLANNER MODAL (Identical to index.html) -->
+    <div id="plannerModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Plan Your Trip</h2>
+            <p>Fill in the details to generate your custom itinerary.</p>
+        
+            <form class="popup-form" onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                    <label>Destination</label>
+                    <input type="text" id="modal-destination-input" placeholder="e.g., Kandy, Ella, Sigiriya" required>
+                </div>
+            
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="date" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Travelers</label>
+                    <select required>
+                        <option value="">Select Travelers</option>
+                        <option value="1">Solo (1 Person)</option>
+                        <option value="2">Couple (2 Persons)</option>
+                        <option value="family">Family / Group</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn">Generate Itinerary</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TRIP BUDGET CALCULATOR MODAL (Simple, Interactive Travel Estimator) -->
+    <div id="budgetModal" class="modal-overlay">
+        <div class="modal-content budget-modal-content">
+            <span class="close-btn" onclick="closeBudgetModal()">&times;</span>
+            <div class="budget-modal-header">
+                <h2>💰 Sri Lanka Trip Budget Calculator</h2>
+                <p>Instantly estimate your vacation expenses based on duration, party size, and travel style.</p>
+            </div>
+
+            <div class="budget-calc-grid">
+                <!-- Inputs Column -->
+                <div class="budget-inputs-col">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar-alt"></i> Trip Duration (Days)</label>
+                            <input type="number" id="calc-days" min="1" max="90" value="7" oninput="calculateBudget()">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-users"></i> Travelers</label>
+                            <input type="number" id="calc-travelers" min="1" max="30" value="2" oninput="calculateBudget()">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-hotel"></i> Accommodation Style</label>
+                        <select id="calc-hotel" onchange="calculateBudget()">
+                            <option value="25">Budget Guesthouses & Homestays ($25 / night)</option>
+                            <option value="65" selected>Standard 3-Star Comfort Hotels ($65 / night)</option>
+                            <option value="180">Luxury 5-Star Boutique & Beach Resorts ($180 / night)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-car"></i> Transport Mode</label>
+                        <select id="calc-transport" onchange="calculateBudget()">
+                            <option value="12">Public Bus & Scenic Train ($12 / day)</option>
+                            <option value="28">Tuk-Tuk Rental / Self-Drive ($28 / day)</option>
+                            <option value="70" selected>Private AC Car with Chauffeur Guide ($70 / day)</option>
+                            <option value="115">Luxury Passenger Van with Chauffeur ($115 / day)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-utensils"></i> Dining & Daily Activities</label>
+                        <select id="calc-food" onchange="calculateBudget()">
+                            <option value="15">Budget (Local Eateries & Street Food) ($15 / day / person)</option>
+                            <option value="35" selected>Standard (Mid-range Restaurants & Entrance Fees) ($35 / day / person)</option>
+                            <option value="75">Premium (Fine Dining, Safaris & Water Sports) ($75 / day / person)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-money-bill-wave"></i> Display Currency</label>
+                        <select id="calc-currency" onchange="calculateBudget()">
+                            <option value="USD" selected>USD ($) - United States Dollar</option>
+                            <option value="LKR">LKR (Rs.) - Sri Lankan Rupee</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Live Summary Column -->
+                <div class="budget-summary-col">
+                    <div>
+                        <h3 class="summary-title">Estimated Cost Breakdown</h3>
+                        
+                        <div class="summary-item">
+                            <span>🏨 Stays (<span id="calc-rooms-count">1 room</span>):</span>
+                            <strong id="res-hotel">$455</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>🚗 Transportation:</span>
+                            <strong id="res-transport">$490</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>🍽️ Food & Activities:</span>
+                            <strong id="res-food">$490</strong>
+                        </div>
+
+                        <div class="summary-divider"></div>
+
+                        <div class="summary-total-box">
+                            <span class="total-label">Total Estimated Budget</span>
+                            <div class="total-amount" id="res-total">$1,435</div>
+                            <div class="per-person" id="res-per-person">Approx. $718 / person</div>
+                            <div class="alt-currency" id="res-alt-currency">≈ Rs. 444,850 LKR</div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="cta-pill-red full-width" onclick="applyBudgetToPlanner()">
+                        Use in Itinerary Planner &rarr;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SITE HEADER (Matched to index.html pure black & 3D Flip Navigation) -->
+    <header class="site-header">
+        <div class="header-container">
+            <!-- Brand -->
+            <a href="../index.html" class="brand-wrap">
+                <img src="../01.png" alt="Compass" class="brand-icon">
+                <span class="brand-title">Infinite Travels Sri Lanka</span>
+            </a>
+
+            <!-- 3D Flip Navigation Menu from index.html -->
+            <nav>
+                <ul class="nav-menu" id="main-nav">
+                    <li><a href="../index.html"><span title="Home">Home</span></a></li>
+                    <li><a href="../index.html#services"><span title="Services">Services</span></a></li>
+                    <li class="active"><a href="features.html"><span title="Features">Features</span></a></li>
+                    <li><a href="#destinations"><span title="Destinations">Destinations</span></a></li>
+                    <li><a href="../index.html#contact"><span title="Contact">Contact</span></a></li>
+                    <li id="nav-reg-li"><a href="../auth/register.php"><span title="Register">Register</span></a></li>
+                    <li id="nav-login-li"><a href="../auth/login.php"><span title="LogIn">LogIn</span></a></li>
+                </ul>
+            </nav>
+
+            <!-- Search Box matched to index.html -->
+            <div class="header-actions">
+                <div class="header-search">
+                    <input type="text" placeholder="Search..." aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 1: TOP FEATURES (Cards matched to hotel-card from style.css) -->
+    <section class="section-wrapper" style="padding-top: 45px;">
+        <div class="custom-section-header">
+            <div class="servicebar1head">⚫⚫ Smart Travel Features ⚫⚫</div>
+            <h2 class="section-title">Powerful Tools for Stress-Free Travel</h2>
+            <p class="section-subtitle">Intelligent solutions engineered to help you customize, budget, and travel Sri Lanka effortlessly.</p>
+        </div>
+
+        <div class="cards-grid">
+            <!-- Feature Card 1 -->
+            <div class="luxury-card">
+                <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=700" alt="Itinerary Builder" class="luxury-card-img">
+                <div class="luxury-card-body">
+                    <span class="card-badge">Smart Planning</span>
+                    <h3 class="card-title">Custom Itinerary Builder</h3>
+                    <h4 class="card-tagline">"Personalized Route Mapping"</h4>
+                    <p class="card-desc">Design optimized day-by-day schedules tailored precisely to your vacation dates, favorite interests, travel pace, and party size.</p>
+                    <button type="button" class="card-btn primary" onclick="openPlannerWithDest('')">Start Planning &rarr;</button>
+                </div>
+            </div>
+
+            <!-- Feature Card 2: Interactive Budget Calculator -->
+            <div class="luxury-card">
+                <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=700" alt="Budget Estimator" class="luxury-card-img">
+                <div class="luxury-card-body">
+                    <span class="card-badge gold">Financial Tool</span>
+                    <h3 class="card-title">Live Budget Estimator</h3>
+                    <h4 class="card-tagline">"Zero Hidden Costs"</h4>
+                    <p class="card-desc">Forecast accurate travel expenditure for private transport, scenic train rides, luxury stays, entry tickets, and fine dining across the island.</p>
+                    <button type="button" class="card-btn primary" onclick="openBudgetModal()">Calculate Budget &rarr;</button>
+                </div>
+            </div>
+
+            <!-- Feature Card 3 -->
+            <div class="luxury-card">
+                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=700" alt="Live Weather" class="luxury-card-img">
+                <div class="luxury-card-body">
+                    <span class="card-badge">Climate Advisory</span>
+                    <h3 class="card-title">Regional Weather Forecasts</h3>
+                    <h4 class="card-tagline">"Monsoon & Sun Alerts"</h4>
+                    <p class="card-desc">Get live climate alerts for Central Highlands, Southern beaches, and the Cultural Triangle to choose the ideal travel season and gear.</p>
+                    <button type="button" class="card-btn" onclick="openPlannerWithDest('Ella & Coast')">Check Forecast &rarr;</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: DESTINATIONS & PLACES (Strictly matching hotel-card in style.css) -->
+    <section id="destinations" class="section-wrapper" style="padding-top: 20px;">
+        <div class="custom-section-header">
+            <div class="servicebar1head">⚫⚫ Handpicked Island Wonders ⚫⚫</div>
+            <h2 class="section-title">Popular Sri Lankan Destinations</h2>
+            <p class="section-subtitle">From mist-shrouded mountain peaks to pristine turquoise shores and sacred ancient palaces.</p>
+        </div>
+
+        <div class="cards-grid">
+            <!-- Place 1: Sigiriya -->
+            <div class="luxury-card">
+                <img src="https://6aa830af9422e77b387ef33b.imgix.net/sandbox/dylan-shaw-smUAKwMT8XA-unsplash.jpg" alt="Sigiriya Rock Fortress" class="luxury-card-img">
+                <div class="luxury-card-body">
+                    <span class="card-badge gold">Cultural Heritage</span>
+                    <h3 class="card-title">Sigiriya Rock Fortress</h3>
+                    <h4 class="card-tagline">"Ancient 5th Century Citadel"</h4>
+                    <p class="card-desc">Climb the legendary Lion Rock to discover ancient royal frescoes, landscaped water gardens, and panoramic jungle vistas.</p>
+                    <button type="button" class="card-btn primary" onclick="openPlannerWithDest('Sigiriya')">Plan Sigiriya Trip &rarr;</button>
+                </div>
+            </div>
+
+            <!-- Place 2: Ella -->
+            <div class="luxury-card">
+                <img src="https://6aa830af9422e77b387ef33b.imgix.net/sandbox/llxvisuals--E7dpukTajA-unsplash.jpg" alt="Ella Nine Arch Bridge" class="luxury-card-img">
+                <div class="luxury-card-body">
+                    <span class="card-badge">Hill Country</span>
+                    <h3 class="card-title">Ella Nine Arch Bridge</h3>
+                    <h4 class="card-tagline">"Iconic Bridge in the Sky"</h4>
+                    <p class="card-desc">Walk among lush green tea estates to view colonial viaduct engineering and catch the famous scenic blue hill train.</p>
+                    <button type="button" class="card-btn primary" onclick="openPlannerWithDest('Ella')">Plan Ella Trip &rarr;</button>
+                </div>
+            </div>
+
+            <!-- Place 3: Dining -->
+            <div class="luxury-card">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=700" alt="Galadari Dining" class="luxury-card-img">
+                <div class="luxury-card-body">
+                    <span class="card-badge gold">Partnered Dining</span>
+                    <h3 class="card-title">Galadari Fine Dining</h3>
+                    <h4 class="card-tagline">"Oceanfront Coastal Flavours"</h4>
+                    <p class="card-desc">Curated coastal seafood and authentic Ceylon spices served in an exclusive seaside ambiance overlooking Galle Face Green.</p>
+                    <button type="button" class="card-btn" onclick="openPlannerWithDest('Colombo Dining')">Book Experience &rarr;</button>
+                </div>
+            </div>
+
+            <!-- Place 4: Galle Fort -->
+            <div class="luxury-card">
+                <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=700" alt="Galle Fort" class="luxury-card-img">
+                <div class="luxury-card-body">
+                    <span class="card-badge">Heritage & Beach</span>
+                    <h3 class="card-title">Galle Dutch Fort</h3>
+                    <h4 class="card-tagline">"17th Century Living Fortress"</h4>
+                    <p class="card-desc">Stroll along historic ocean ramparts, boutique jeweler alleys, historic lighthouses, and sunset spots along the south coast.</p>
+                    <button type="button" class="card-btn primary" onclick="openPlannerWithDest('Galle Fort')">Plan Galle Trip &rarr;</button>
+                </div>
+            </div>
+
+            <!-- Place 5: Kandy -->
+            <div class="luxury-card">
+                <img src="https://6aa830af9422e77b387ef33b.imgix.net/sandbox/chathura-anuradha-subasinghe-40uQmE9Zq8g-unsplash.jpg" alt="Temple of the Tooth" class="luxury-card-img">
+                <div class="luxury-card-body">
+                    <span class="card-badge gold">Sacred Capital</span>
+                    <h3 class="card-title">Temple of the Tooth</h3>
+                    <h4 class="card-tagline">"Historic Kandy Kingdom"</h4>
+                    <p class="card-desc">Experience golden-roofed shrines, sacred Buddhist rituals, and peaceful lakeside walks in Sri Lanka's historic hill kingdom.</p>
+                    <button type="button" class="card-btn primary" onclick="openPlannerWithDest('Kandy')">Plan Kandy Trip &rarr;</button>
+                </div>
+            </div>
+
+            <!-- Place 6: Mirissa -->
+            <div class="luxury-card">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=700" alt="Mirissa Beach" class="luxury-card-img">
+                <div class="luxury-card-body">
+                    <span class="card-badge">Marine Adventure</span>
+                    <h3 class="card-title">Mirissa Whale Watching</h3>
+                    <h4 class="card-tagline">"Blue Whales & Golden Sands"</h4>
+                    <p class="card-desc">Take thrilling ocean safaris to observe the world's largest blue whales in their natural habitat followed by beachfront relaxation.</p>
+                    <button type="button" class="card-btn primary" onclick="openPlannerWithDest('Mirissa')">Plan Mirissa Trip &rarr;</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: FAQ SECTION (Styled in dark luxury theme) -->
+    <section class="section-wrapper" style="padding-top: 20px;">
+        <div class="custom-section-header">
+            <div class="servicebar1head">⚫⚫ Got Questions? ⚫⚫</div>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-subtitle">Everything you need to know about planning and traveling across Sri Lanka with us.</p>
+        </div>
+
+        <div class="faq-container">
+            <!-- FAQ 1 -->
+            <div class="faq-box">
+                <button type="button" class="faq-header-btn" onclick="toggleFaq(this)">
+                    <span>How does the Custom Itinerary Builder work?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-body-content" style="display: none;">
+                    Simply choose your preferred destinations, travel dates, and group size. Our interactive system generates a personalized, time-optimized travel plan with recommended stays, dining, and scenic routes.
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="faq-box">
+                <button type="button" class="faq-header-btn" onclick="toggleFaq(this)">
+                    <span>How does the Live Budget Estimator calculate costs?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-body-content" style="display: none;">
+                    Our calculator estimates accommodation by room requirements, transportation modes (from scenic trains to private chauffeur-driven cars), and daily dining tiers with live currency conversion between USD ($) and LKR (Rs.).
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="faq-box">
+                <button type="button" class="faq-header-btn" onclick="toggleFaq(this)">
+                    <span>Can I combine coastal stays with cultural and wildlife tours?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-body-content" style="display: none;">
+                    Absolutely. Most travelers combine Sigiriya and Kandy in the Cultural Triangle with the misty hills of Ella, Yala national park safaris, and relaxing beach getaways in Mirissa or Bentota.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: TESTIMONIALS (Matched to dark aesthetic) -->
+    <section class="section-wrapper" style="padding-top: 20px;">
+        <div class="custom-section-header">
+            <div class="servicebar1head">⚫⚫ Traveler Experiences ⚫⚫</div>
+            <h2 class="section-title">What Our Guests Say</h2>
+            <p class="section-subtitle">Real feedback from travelers who explored Sri Lanka with Infinite Travels.</p>
+        </div>
+
+        <div class="cards-grid">
+            <div class="testimonial-card">
+                <div>
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"The itinerary builder saved us days of research. Traveling from Sigiriya to Ella by train was organized seamlessly with beautiful stays throughout."</p>
+                </div>
+                <div class="testimonial-user">
+                    <div class="user-avatar">SK</div>
+                    <div>
+                        <h5 class="user-name">Sarah Jenkins</h5>
+                        <span class="user-role">Solo Explorer, UK</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div>
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"The budget estimator was spot on. Our family trip to Galle and Mirissa was completely stress-free without any hidden charges."</p>
+                </div>
+                <div class="testimonial-user">
+                    <div class="user-avatar green">RP</div>
+                    <div>
+                        <h5 class="user-name">Rohan Patel</h5>
+                        <span class="user-role">Family Vacation, Australia</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div>
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Weather forecasts helped us pack perfectly for cold misty evenings in Ella and sunny surf days in the South. Highly recommend!"</p>
+                </div>
+                <div class="testimonial-user">
+                    <div class="user-avatar gold">AL</div>
+                    <div>
+                        <h5 class="user-name">Amelie Laurent</h5>
+                        <span class="user-role">Backpacker, France</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER SECTION (Exact 3-column match to index.html .custom-footer) -->
+    <footer class="custom-footer">
+        <div class="footer-box">
+            <!-- Column 1: Brand Info -->
+            <div class="f-col">
+                <h3 class="f-title">✈️ Infinite Travels Sri Lanka</h3>
+                <p class="f-text">Explore Sri Lanka with personalized itineraries, budget tools, and handpicked boutique stays across the island.</p>
+            </div>
+            
+            <!-- Column 2: Quick Links -->
+            <div class="f-col">
+                <h4 class="f-sub-title">Quick Links</h4>
+                <div class="f-links-wrap">
+                    <a href="../index.html" class="f-link-item">Home</a>
+                    <a href="features.html" class="f-link-item">Features</a>
+                    <a href="#destinations" class="f-link-item">Destinations</a>
+                    <a href="../index.html#services" class="f-link-item">Services</a>
+                    <a href="../index.html#contact" class="f-link-item">Contact Us</a>
+                </div>
+            </div>
+
+            <!-- Column 3: Contact Info -->
+            <div class="f-col">
+                <h4 class="f-sub-title">Contact Info</h4>
+                <p class="f-text">📍 Moratuwa, Sri Lanka</p>
+                <p class="f-text">📧 info@infinitetourism.lk</p>
+                <p class="f-text">📞 +94 11 232 0544</p>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="f-bottom">
+            <p>&copy; 2026 Infinite Tourism Sri Lanka. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Form Handling Script -->
+    <script src="../Form/form.js"></script>
+
+    <!-- Page Specific Script for Modal, Budget Calculator & Auth State -->
+    <script>
+        // Modal helper to prefill destination
+        function openPlannerWithDest(destName) {
+            const modal = document.getElementById('plannerModal');
+            const destInput = document.getElementById('modal-destination-input');
+            if (destInput && destName) {
+                destInput.value = destName;
+            }
+            if (modal) {
+                modal.style.display = 'flex';
+            }
+        }
+
+        // ==========================================
+        // TRIP BUDGET CALCULATOR LOGIC
+        // ==========================================
+        const USD_TO_LKR = 310;
+
+        function calculateBudget() {
+            const daysInput = document.getElementById('calc-days');
+            const travelersInput = document.getElementById('calc-travelers');
+            const hotelSelect = document.getElementById('calc-hotel');
+            const transportSelect = document.getElementById('calc-transport');
+            const foodSelect = document.getElementById('calc-food');
+            const currencySelect = document.getElementById('calc-currency');
+
+            if (!daysInput || !travelersInput) return;
+
+            const days = Math.max(1, parseInt(daysInput.value) || 1);
+            const travelers = Math.max(1, parseInt(travelersInput.value) || 1);
+            const hotelRate = parseFloat(hotelSelect.value) || 65;
+            const transportRate = parseFloat(transportSelect.value) || 70;
+            const foodRate = parseFloat(foodSelect.value) || 35;
+            const currency = currencySelect.value || 'USD';
+
+            // Rooms needed: 2 persons per room
+            const rooms = Math.ceil(travelers / 2);
+            const roomsLabel = rooms === 1 ? '1 room' : `${rooms} rooms`;
+            const roomsCountEl = document.getElementById('calc-rooms-count');
+            if (roomsCountEl) roomsCountEl.textContent = roomsLabel;
+
+            // Totals in USD
+            const totalHotelUSD = rooms * hotelRate * days;
+            const totalTransportUSD = transportRate * days;
+            const totalFoodUSD = travelers * foodRate * days;
+            const totalUSD = totalHotelUSD + totalTransportUSD + totalFoodUSD;
+            const perPersonUSD = totalUSD / travelers;
+
+            // Totals in LKR
+            const totalLKR = totalUSD * USD_TO_LKR;
+            const perPersonLKR = perPersonUSD * USD_TO_LKR;
+
+            // Display in Selected Currency
+            if (currency === 'LKR') {
+                document.getElementById('res-hotel').textContent = 'Rs. ' + Math.round(totalHotelUSD * USD_TO_LKR).toLocaleString();
+                document.getElementById('res-transport').textContent = 'Rs. ' + Math.round(totalTransportUSD * USD_TO_LKR).toLocaleString();
+                document.getElementById('res-food').textContent = 'Rs. ' + Math.round(totalFoodUSD * USD_TO_LKR).toLocaleString();
+                document.getElementById('res-total').textContent = 'Rs. ' + Math.round(totalLKR).toLocaleString();
+                document.getElementById('res-per-person').textContent = 'Approx. Rs. ' + Math.round(perPersonLKR).toLocaleString() + ' / person';
+                document.getElementById('res-alt-currency').textContent = '≈ $' + Math.round(totalUSD).toLocaleString() + ' USD';
+            } else {
+                document.getElementById('res-hotel').textContent = '$' + Math.round(totalHotelUSD).toLocaleString();
+                document.getElementById('res-transport').textContent = '$' + Math.round(totalTransportUSD).toLocaleString();
+                document.getElementById('res-food').textContent = '$' + Math.round(totalFoodUSD).toLocaleString();
+                document.getElementById('res-total').textContent = '$' + Math.round(totalUSD).toLocaleString();
+                document.getElementById('res-per-person').textContent = 'Approx. $' + Math.round(perPersonUSD).toLocaleString() + ' / person';
+                document.getElementById('res-alt-currency').textContent = '≈ Rs. ' + Math.round(totalLKR).toLocaleString() + ' LKR';
+            }
+        }
+
+        function openBudgetModal() {
+            const modal = document.getElementById('budgetModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                calculateBudget();
+            }
+        }
+
+        function closeBudgetModal() {
+            const modal = document.getElementById('budgetModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        function applyBudgetToPlanner() {
+            closeBudgetModal();
+            const days = document.getElementById('calc-days').value || 7;
+            const travelers = document.getElementById('calc-travelers').value || 2;
+            const totalText = document.getElementById('res-total').textContent;
+
+            // Open itinerary planner prefilled with calculation result
+            openPlannerWithDest(`Sri Lanka Tour (${days} Days - Budget ${totalText})`);
+            
+            // Set travelers dropdown
+            const select = document.querySelector('#plannerModal select');
+            if (select) {
+                if (travelers == 1) select.value = "1";
+                else if (travelers == 2) select.value = "2";
+                else select.value = "family";
+            }
+        }
+
+        // Close modals on outside click
+        window.addEventListener('click', function(e) {
+            const budgetModal = document.getElementById('budgetModal');
+            if (budgetModal && e.target === budgetModal) {
+                budgetModal.style.display = 'none';
+            }
+        });
+
+        // FAQ accordion toggle
+        function toggleFaq(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            const isHidden = content.style.display === 'none' || content.style.display === '';
+            
+            if (isHidden) {
+                content.style.display = 'block';
+                btn.classList.remove('collapsed');
+                if (icon) icon.className = 'fas fa-chevron-up';
+            } else {
+                content.style.display = 'none';
+                btn.classList.add('collapsed');
+                if (icon) icon.className = 'fas fa-chevron-down';
+            }
+        }
+
+        // Auto open budget calculator if URL has ?openBudget=true or ?calculator=true
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('openBudget') === 'true' || urlParams.get('calculator') === 'true') {
+                openBudgetModal();
+            }
+
+            // Auth Navigation Check (matched to script.js on index.html)
+            fetch('../auth/check_auth.php')
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.logged_in) {
+                        const nav = document.getElementById('main-nav');
+                        if (nav) {
+                            const regLi = document.getElementById('nav-reg-li');
+                            const loginLi = document.getElementById('nav-login-li');
+                            if (regLi) regLi.remove();
+                            if (loginLi) loginLi.remove();
+
+                            const userLi = document.createElement('li');
+                            const displayName = data.username ? data.username : 'User';
+                            userLi.innerHTML = `<a href="javascript:void(0)"><span title="Hi, ${displayName}">Hi, ${displayName}</span></a>`;
+                            nav.appendChild(userLi);
+
+                            const logoutLi = document.createElement('li');
+                            logoutLi.innerHTML = `<a href="../auth/logout.php"><span title="LogOut">LogOut</span></a>`;
+                            nav.appendChild(logoutLi);
+                        }
+                    }
+                })
+                .catch(err => console.log('Auth check error:', err));
+        });
+    </script>
+</body>
+</html>

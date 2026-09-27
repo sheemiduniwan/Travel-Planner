@@ -1,0 +1,304 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Infiniti</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="style.css">
+		<script defer src="all.js"></script>
+		
+	</head>
+
+
+	<div id="plannerModal" class="modal-overlay">
+    	<div class="modal-content">
+        	<span class="close-btn" onclick="closeModal()">&times;</span>
+        	<h2>Plan Your Trip</h2>
+        	<p>Fill in the details to generate your custom itinerary.</p>
+        
+        	<form class="popup-form" onsubmit="handleFormSubmit(event)">
+            	<div class="form-group">
+                	<label>Destination</label>
+                	<input type="text" placeholder="e.g., Kandy, Ella, Sigiriya" required>
+            	</div>
+            
+            	<div class="form-row">
+                	<div class="form-group">
+                    	<label>Start Date</label>
+                    	<input type="date" required>
+                	</div>
+                	<div class="form-group">
+                    	<label>End Date</label>
+                    	<input type="date" required>
+                	</div>
+            	</div>
+
+            	<div class="form-group">
+                	<label>Travelers</label>
+                	<select required>
+                    	<option value="">Select Travelers</option>
+                    	<option value="1">Solo (1 Person)</option>
+                    	<option value="2">Couple (2 Persons)</option>
+                    	<option value="family">Family / Group</option>
+                	</select>
+            	</div>
+
+            	<button type="submit" class="submit-btn">Generate Itinerary</button>
+        	</form>
+    	</div>
+	</div>
+
+	<script src="Form/form.js"></script>
+	<script src="script.js"></script>
+	
+	<body>
+		/* First Blue row */
+ 		<div class="row_1"></div>
+		
+		/* Search Box */
+		<div class="searchbox">
+			<input class="search-txt" type="text" name="" placeholder="Type to search">
+			<a class="search-btn" href="#">
+				<i class="fas fa-search"></i>
+			</a>
+		</div>
+		
+		/* Clock */
+		<div id="clock"></div>
+		<script src="radialIndicator.js"></script>
+		<script src="angular.radialIndicator.js"></script>
+		<script type="text/javascript">
+			var radialObj = radialIndicator
+			('#clock',
+				{
+				radius:25,
+				barWidth:7,
+				barColor:'#ae812e',
+				minValue:0,
+				maxValue:60,
+				fontWeight:'normal',
+				roundCorner:true,
+				format: function(value)
+					{
+					var date = new Date();
+					return date.getHours() + ':' + date.getMinutes();
+					}
+				}
+			);
+			
+			setInterval
+				(function ()
+					{
+					radialObj.value(new Date().getSeconds() + 1);
+					}, 1000
+				);
+		</script>
+
+		/* Navigaion Bar */
+		<ul id="main-nav">
+			<li><a href="#hero"><span title="Home">Home</span></a></li>
+			<li><a href="#services"><span title="Services">Services</span></a></li>
+			<li><a href="auth/register.php"><span title="Register">Register</span></a></li>
+			<li><a href="auth/login.php"><span title="LogIn">LogIn</span></a></li>
+			<li><a href="Features/features.html"><span title="Features">Features</span></a></li>
+		</ul>
+
+		/** Text 01 **/
+		<div class="nametext">Infinite Travels Sri Lanka</div>
+		<img src="01.png" class="settingpic"></img>
+		
+		/** Slider **/
+		<div class="slider"></div>
+		
+		<div class="row_2"></div>
+		
+		/** Text 02 **/
+		<div class="text2">Craft Your Ultimate Sri Lankan Journey.</div>
+		
+		/** Logo **/
+		<img src="08.png" class="logo"></img>
+		
+		/** Text 03 **/
+		<div class="text3">Discover, plan, and customize your perfect Sri Lankan travel itinerary with top-rated stays and experiences.</div>
+		
+		/** Button 01 **/
+		<div class="submit1">
+			<!--<input type="submit" name="" value="Start Planning Now">-->
+			<input type="button" name="" value="Start Planning Now" onclick="openModal(event)">
+			
+		</div>
+
+		
+		/** Text 04 **/
+		<div class="text4">Guides | Maps | Resorts | Hotels | Places | Transport | Foods</div>
+
+		
+		
+		/** Photo Grid **/
+		<img src="grid/09.jpg" class="gpic1"></img>
+		<img src="grid/10.jpg" class="gpic2"></img>
+		<img src="grid/11.jpg" class="gpic3"></img>
+		<img src="grid/12.jpg" class="gpic4"></img>
+		
+		/** Text on photo grid **/
+		<text class="ptext1"> Beach Getaways </text>
+		<text class="ptext2"> Wellness & Stays </text>
+		<text class="ptext3"> Water Adventures </text>
+		<text class="ptext4"> Cultural Tours </text>
+
+		
+
+
+		<!-- TRAVEL PARTNERS SECTION -->
+		<section class="partners-section">
+			<div class="servicebar1head">⚫⚫ Our Travel Partners ⚫⚫</div>
+			
+			<div class="partners-content">
+				<img src="services/13.png" alt="Dining" class="spic1">
+				<div class="partners-text">
+					<p class="food">Explore top-rated restaurants and local dining experiences included in our itineraries.</p>
+					<p class="food2">Partnered with leading hotels and restaurants across the island to offer you the best dining experiences.</p>
+					<div class="partner-logos">
+						<img src="services/14.png" alt="Partner 1" class="partner-img">
+						<img src="services/15.png" alt="Partner 2" class="partner-img">
+						<img src="services/16.png" alt="Partner 3" class="partner-img">
+						<img src="services/17.png" alt="Partner 4" class="partner-img">
+					</div>
+				</div>
+			</div>
+
+			<div class="b2">
+				<a href="Features/features.html#destinations" class="orderbtn-link">Explore Places.!</a>
+			</div>
+		</section>
+
+		<!-- FEATURED HOTELS SECTION -->
+		<section class="hotels-section">
+			<div class="hotels-container">
+				<!-- Section Title -->
+				<div class="section-header">
+					<h2 class="section-title">Handpicked Luxury Stays</h2>
+					<p class="section-subtitle">We collaborate with exclusive resorts to guarantee you a peaceful and comfortable stay.</p>
+				</div>
+
+				<!-- 3-Card Grid Structure -->
+				<div class="hotels-grid">
+					<!-- Card 1 -->
+					<div class="hotel-card">
+						<img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=600" alt="Amaara Sky Hotel" class="card-img">
+						<div class="card-body">
+							<span class="hotel-badge">Boutique Hotel</span>
+							<h3 class="hotel-title">Amaara Sky Hotel</h3>
+							<h4 class="hotel-tagline">"Feel at Home"</h4>
+							<p class="hotel-desc">Scenic mountain views paired with luxury amenities for a cozy stay in Kandy.</p>
+							<a href="#contact" class="book-btn">Book Hotel</a>
+						</div>
+					</div>
+
+					<!-- Card 2 -->
+					<div class="hotel-card">
+						<img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=600" alt="Heritance Kandalama" class="card-img">
+						<div class="card-body">
+							<span class="hotel-badge">Eco Resort</span>
+							<h3 class="hotel-title">Heritance Kandalama</h3>
+							<h4 class="hotel-tagline">"Nature Integrated"</h4>
+							<p class="hotel-desc">Iconic architectural marvel seamlessly built into natural rock structures in Dambulla.</p>
+							<a href="#contact" class="book-btn">Book Hotel</a>
+						</div>
+					</div>
+
+					<!-- Card 3 -->
+					<div class="hotel-card">
+						<img src="https://6aa830af9422e77b387ef33b.imgix.net/sandbox/images%20(1).jpg" alt="Cinnamon Bentota" class="card-img">
+						<div class="card-body">
+							<span class="hotel-badge">Beach Resort</span>
+							<h3 class="hotel-title">Cinnamon Bentota</h3>
+							<h4 class="hotel-tagline">"Oceanfront Luxury"</h4>
+							<p class="hotel-desc">Premium coastal resort experience with private beach access and water sports.</p>
+							<a href="#contact" class="book-btn">Book Hotel</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+				<!-- CONTACT US SECTION -->
+		<!-- CONTACT US SECTION -->
+		<section id="contact" class="contact-section">
+			<div class="contact-overlay">
+				<div class="contact-container">
+					
+					<div class="contact-header">
+						<h2 class="contact-title">Start Planning Your Journey</h2>
+						<p class="contact-subtitle">Have questions or need help customizing your travel itinerary? Send us a message and our travel experts will assist you.</p>
+					</div>
+
+					<form class="contact-form" action="contact.php" method="POST">
+						<div class="form-group">
+							<label for="name" class="form-label">Full Name</label>
+							
+							<input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
+						</div>
+
+						<div class="form-group">
+							<label for="email" class="form-label">Email Address</label>
+							
+							<input type="email" id="email" name="email" class="form-input" placeholder="name@example.com" required>
+						</div>
+
+						<div class="form-group">
+							<label for="phone" class="form-label">Phone / WhatsApp</label>
+							
+							<input type="tel" id="phone" name="phone" class="form-input" placeholder="+94 7X XXX XXXX">
+						</div>
+
+						<div class="form-group">
+							<label for="message" class="form-label">Your Travel Requirements / Message</label>
+							
+							<textarea id="message" name="message" rows="4" class="form-input" placeholder="Tell us about your trip dates, preferred destinations, or budget..." required></textarea>
+						</div>
+
+						<button type="submit" class="contact-send-btn">Send Message &rarr;</button>
+					</form>
+
+				</div>
+			</div>
+		</section>
+
+						<!-- FOOTER SECTION -->
+		<footer class="custom-footer">
+			<div class="footer-box">
+				
+				<!-- Column 1: Brand Info -->
+				<div class="f-col">
+					<h3 class="f-title">✈️ TravelPlanner</h3>
+					<p class="f-text">Explore Sri Lanka with personalized itineraries, budget tools, and handpicked stays.</p>
+				</div>
+				
+				<!-- Column 2: Quick Links (No UL/LI tags to prevent inherited CSS bugs) -->
+				<div class="f-col">
+					<h4 class="f-sub-title">Quick Links</h4>
+					<div class="f-links-wrap">
+						<a href="index.html" class="f-link-item">Home</a>
+						<a href="Features/features.html" class="f-link-item">Features</a>
+						<a href="Features/features.html#destinations" class="f-link-item">Destinations</a>
+						<a href="#contact" class="f-link-item">Contact Us</a>
+					</div>
+				</div>
+
+				<!-- Column 3: Contact Info -->
+				<div class="f-col">
+					<h4 class="f-sub-title">Contact Info</h4>
+					<p class="f-text">📍 Moratuwa, Sri Lanka</p>
+					<p class="f-text">📧 info@infinitetourism.lk</p>
+					<p class="f-text">📞 +94 11 232 0544</p>
+				</div>
+
+			</div>
+
+			<!-- Copyright -->
+			<div class="f-bottom">
+				<p>&copy; 2026 Infinite Tourism Sri Lanka. All Rights Reserved.</p>
+			</div>
+		</footer>
+	</body>
+</html>
