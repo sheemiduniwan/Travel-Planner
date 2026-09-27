@@ -1,9 +1,7 @@
-/* ==========================================================================
-   INFINITE TRAVELS SRI LANKA - FEATURES PAGE STYLESHEET
-   Matching theme perfectly with index.html
-   ========================================================================== */
 
-/* Color & Theme Variables */
+
+
+
 :root {
     --bg-black: #000000;
     --bg-dark-1: #08090a;
@@ -26,7 +24,6 @@
     --text-muted: #718096;
 }
 
-/* Reset & Global */
 * {
     margin: 0;
     padding: 0;
@@ -41,9 +38,7 @@ body.features-page {
     overflow-x: hidden;
 }
 
-/* ==========================================================================
-   HEADER & NAVIGATION BAR (Matched to index.html)
-   ========================================================================== */
+
 .site-header {
     background-color: var(--bg-black);
     border-bottom: 1px solid var(--border-subtle);
@@ -63,7 +58,7 @@ body.features-page {
     min-height: 70px;
 }
 
-/* Brand info matching index.html */
+
 .brand-wrap {
     display: flex;
     align-items: center;
@@ -85,7 +80,7 @@ body.features-page {
     letter-spacing: 0.5px;
 }
 
-/* Signature 3D Flip Navigation Menu from index.html */
+
 .nav-menu {
     display: flex;
     align-items: center;
@@ -152,13 +147,13 @@ body.features-page {
     transform: rotateX(90deg) translateY(-10px);
 }
 
-/* Active Nav State */
+
 .nav-menu li.active a span:after {
     color: var(--accent-gold-hover);
     border-bottom: 2px solid var(--accent-gold);
 }
 
-/* Header Right Extras: Search & Auth */
+
 .header-actions {
     display: flex;
     align-items: center;
@@ -196,9 +191,7 @@ body.features-page {
     cursor: pointer;
 }
 
-/* ==========================================================================
-   HERO BANNER (Matched to index.html)
-   ========================================================================== */
+
 .features-hero-section {
     position: relative;
     min-height: 380px;
@@ -259,7 +252,7 @@ body.features-page {
     flex-wrap: wrap;
 }
 
-/* Red & Gold Pill CTA Button matching index.html */
+
 .cta-pill-red {
     display: inline-block;
     padding: 12px 34px;
@@ -282,7 +275,7 @@ body.features-page {
     box-shadow: 0 6px 20px rgba(230, 181, 0, 0.4);
 }
 
-/* White Outline Pill Button matching index.html */
+
 .cta-pill-outline {
     display: inline-block;
     padding: 11px 30px;
@@ -305,9 +298,6 @@ body.features-page {
     transform: translateY(-2px);
 }
 
-/* ==========================================================================
-   SECTION HEADERS (Matched to index.html)
-   ========================================================================== */
 .section-wrapper {
     max-width: 1200px;
     margin: 0 auto;
@@ -346,16 +336,15 @@ body.features-page {
     font-family: 'Roboto', sans-serif;
 }
 
-/* ==========================================================================
-   CARDS & GRIDS (Matched to hotel-card from style.css)
-   ========================================================================== */
+
+ 
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 25px;
 }
 
-/* Card item strictly following index.html hotel-card */
+
 .luxury-card {
     background-color: var(--bg-card);
     border: 1px solid var(--border-dark);
@@ -427,7 +416,7 @@ body.features-page {
     margin-bottom: 20px;
 }
 
-/* Card Pill Button from index.html book-btn */
+
 .card-btn {
     display: block;
     text-align: center;
@@ -461,9 +450,7 @@ body.features-page {
     color: #000000;
 }
 
-/* ==========================================================================
-   PARTNERS BANNER (Matched to index.html .partners-section)
-   ========================================================================== */
+
 .features-partners-bar {
     background-color: var(--bg-dark-2);
     border-top: 1px solid var(--border-subtle);
@@ -495,9 +482,7 @@ body.features-page {
     transform: scale(1.05);
 }
 
-/* ==========================================================================
-   FAQ ACCORDION (Styled to dark theme)
-   ========================================================================== */
+
 .faq-box {
     background-color: var(--bg-card);
     border: 1px solid var(--border-dark);
@@ -541,9 +526,7 @@ body.features-page {
     line-height: 1.6;
 }
 
-/* ==========================================================================
-   TESTIMONIALS (Matched to dark aesthetic)
-   ========================================================================== */
+
 .testimonial-card {
     background-color: var(--bg-card);
     border: 1px solid var(--border-dark);
@@ -603,9 +586,7 @@ body.features-page {
     font-size: 12px;
 }
 
-/* ==========================================================================
-   TRIP PLANNER MODAL (Identical to index.html)
-   ========================================================================== */
+
 .modal-overlay {
     display: none;
     position: fixed;
@@ -713,9 +694,7 @@ body.features-page {
     color: #000;
 }
 
-/* ==========================================================================
-   FOOTER (Identical to index.html .custom-footer)
-   ========================================================================== */
+
 footer.custom-footer {
     background-color: var(--bg-dark-1) !important;
     color: var(--text-muted) !important;
@@ -792,9 +771,7 @@ footer.custom-footer {
     color: var(--text-muted) !important;
 }
 
-/* ==========================================================================
-   BUDGET CALCULATOR MODAL (Simple, Interactive Travel Estimator)
-   ========================================================================== */
+
 .budget-modal-content {
     background: #18191c !important;
     border: 1px solid var(--border-dark) !important;
@@ -956,9 +933,7 @@ footer.custom-footer {
     text-align: center;
 }
 
-/* ==========================================================================
-   RESPONSIVE DESIGN
-   ========================================================================== */
+
 @media (max-width: 992px) {
     .header-container {
         flex-direction: column;
