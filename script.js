@@ -1,4 +1,4 @@
-// HOME link එක click කළ විට උඩටම smooth scroll වීම
+
 const homeLink = document.querySelector('a[href="#hero"]');
 if (homeLink) {
     homeLink.addEventListener('click', function(e) {
@@ -10,7 +10,7 @@ if (homeLink) {
     });
 }
 
-// Check logged in user status and update navigation bar dynamically
+
 document.addEventListener('DOMContentLoaded', function() {
     fetch('auth/check_auth.php')
         .then(response => response.json())
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     });
 
-                    // Add greeting and logout options
+                    
                     const userLi = document.createElement('li');
                     const displayName = data.username ? data.username : 'User';
                     userLi.innerHTML = `<a href="javascript:void(0)"><span title="Hi, ${displayName}">Hi, ${displayName}</span></a>`;
